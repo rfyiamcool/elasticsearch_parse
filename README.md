@@ -4,9 +4,9 @@
 首先注明下本项目是由来,学习Elasticsearch本身是有些痛苦的, 我们可以熟练的编写SQL 、 Mongodb语句，但对于Elasticsearch Dsl语法总是蒙头，一个劲的翻找笔记...  
 简单说 Elasticsearch Parse可以让你更容易的上手ES, 他的功能主要是语句映射, 有点ORM的意思... 
 
-此项目继承于`elasticsearch-dsl-py`, 其实砍掉了大量的代码,然后中间又加了一些佐料, 只是为了DSL语句映射功能 ! 
+此项目继承于`elasticsearch-dsl-py`,本来是想fork子项目,开发好后提交pull request, 但是想到我这语法映射的功能, 对于官方来说不是很稀罕,索性直接砍掉了 70% 代码,然后中间又加了一些佐料, 最终只是为了DSL语句映射功能 ! 
 
-安装方法:
+模块安装方法:
 ```
 pip install elasticsearch_parse
 ```
@@ -124,7 +124,7 @@ s[3].to_dict() {'query': {'match_all': {}}, 'from': 3, 'size': 1}
 assert s.to_dict(size=10) == {"query": {"match": {'f': 42}}, "size": 10}
 ```
 
-内部size控制
+嵌入内部size控制
 ```
 s = search.Search.from_dict({"size": 5})
 assert {
@@ -147,4 +147,8 @@ d = {
          }
     }
 ```
+
+
+...
+
 
