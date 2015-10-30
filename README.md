@@ -43,13 +43,53 @@ response = client.search(
 ```
 from elasticsearch_parse import Search, Q
 
-s = Search(using=client, index="my-index") \
-    .filter("term", category="search") \
-    .query("match", title="python")   \
-    .query(~Q("match", description="beta"))
+s = Search(index="my-index") \
+    .filter("term", blog="xiaorui.cc") \
+    .query("match", author="ruifengyun")   \
+    .query(~Q("match", face="good"))
 
-s.aggs.bucket('per_tag', 'terms', field='tags') \
-    .metric('max_lines', 'max', field='lines')
+s.aggs.bucket('per_tag', 'terms', field='tags')
 
 response = s.execute()
 ```
+我们得到的结果是:
+```
+{
+    "query": {
+        "filtered": {
+            "filter": {
+                "term": {
+                    "blog": "xiaorui.cc"
+                }
+            },
+            "query": {
+                "bool": {
+                    "must_not": [
+                        {
+                            "match": {
+                                "face": "good"
+                            }
+                        }
+                    ],
+                    "must": [
+                        {
+                            "match": {
+                                "author": "ruifengyun"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "aggs": {
+        "per_tag": {
+            "terms": {
+                "field": "tags"
+            }
+        }
+    }
+}
+```
+
+s.query('range', ** {'@timestamp': {'lt': 'now'}})
