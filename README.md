@@ -6,7 +6,14 @@
 
 此项目继承于`elasticsearch-dsl-py`, 其实砍掉了大量的代码,然后中间又加了一些佐料, 只是为了DSL语句映射功能 ! 
 
-用原始的DSL语法操作的过程  
+安装方法:
+```
+pip install elasticsearch_parse
+```
+
+下面我们来体验下封装后的es语法解释器.
+
+首先用原始的DSL语法操作,一眼望去会有些麻烦, 手写起来会更麻烦.  
 ```
 from elasticsearch import Elasticsearch
 client = Elasticsearch()
@@ -38,7 +45,7 @@ response = client.search(
 
 ```
 
-下面是使用Elasticsearch_parse的用法
+下面是使用Elasticsearch_parse的用法,要多简单就多简单
 
 ```
 from elasticsearch_parse import Search, Q
