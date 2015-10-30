@@ -99,4 +99,52 @@ response = s.execute()
 }
 ```
 
+我们把语法的用法给过一遍.
+```
+s = search.Search()
+```
+
+通过match查询,f字段值为55的数据
+```
+s.query('match', f=55)
+```
+
+时间范围
+```
 s.query('range', ** {'@timestamp': {'lt': 'now'}})
+```
+
+外围的size的控制  
+```
+s = s.query('match', f=42)
+s[3].to_dict() {'query': {'match_all': {}}, 'from': 3, 'size': 1}
+```
+
+```
+assert s.to_dict(size=10) == {"query": {"match": {'f': 42}}, "size": 10}
+```
+
+内部size控制
+```
+s = search.Search.from_dict({"size": 5})
+assert {
+     "query": {"match_all": {}},
+     "size": 5
+} == s.to_dict()
+```
+
+对于aggs的聚合的使用
+```
+s = s.query('match', f=42)
+assert {"query": {"match": {'f': 42}}} == s.to_dict()
+assert {"query": {"match": {'f': 42}}, "size": 10} == s.to_dict(size=10)
+s.aggs.bucket('per_tag', 'terms', field='f').metric('max_score', 'max', field='score')
+d = {
+    'aggs': {
+        'per_tag': {
+            'terms': {'field': 'f'},
+            'aggs': {'max_score': {'max': {'field': 'score'}}}
+         }
+    }
+```
+
