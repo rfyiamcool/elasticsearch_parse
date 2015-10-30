@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='elasticsearch_parse',
-    version='1.0',
+    version='2.0',
     description='elasticsearch parse',
     long_description=open('README.md').read(),
     keywords = ["elasticsearch_parse","fengyun"],
