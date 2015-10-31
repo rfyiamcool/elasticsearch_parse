@@ -147,6 +147,22 @@ d = {
          }
     }
 ```
+下面在介绍下aggs的用法:
+
+取出某个字段最大的数据
+```
+s.aggs.Max(field='score')
+```
+
+按照条件分组聚合
+```
+s.aggs.A('terms', field='tags', aggs={'max_score': max_score})
+```
+
+分组聚合,Elasticsearch会帮你针对count排序
+```
+s.aggs.bucket('per_tag', 'terms', field='tags')
+```
 
 
 ...
